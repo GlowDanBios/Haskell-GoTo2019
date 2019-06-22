@@ -1,0 +1,151 @@
+1.2.7
+lenVec3 x y z =  sqrt (x**2 + y**2 + z**2)
+
+1.2.10
+sign x
+    | x > 1 = 1
+    | x == 0 = 0
+    |otherwise = -1
+
+1.3.8
+x |-| y 
+    |x-y>0 = x-y
+    |otherwise = (x-y) * (-1)
+
+1.4.9
+import Data.Char
+twoDigits2Int :: Char -> Char -> Int
+twoDigits2Int x y
+    |(isDigit x) && (isDigit y) = (digitToInt(x) * 10) + digitToInt(y)
+    |otherwise = 100
+
+1.4.11
+dist :: (Double, Double) -> (Double, Double) -> Double
+dist p1 p2 = sqrt((fst(p1)-fst(p2))**2 + (snd(p1)-snd(p2))**2)
+
+1.5.4
+doubleFact :: Integer -> Integer
+doubleFact n = if n > 1
+               then n * doubleFact(n-2)
+               else 1
+
+1.5.7
+fibonacci :: Integer -> Integer
+fibonacci 1 = 1
+fibonacci 0 = 0
+fibonacci n
+    |n>0 = fibonacci(n-1) + fibonacci(n-2)
+    |otherwise = fibonacci(n+2) - fibonacci(n+1)
+
+1.5.9
+fibonacci n = helper 0 1 n 
+helper f1 f2 n 
+    | n == 0   = f1 
+    | n > 0    = helper (f1+f2) f1 (n-1)
+    | n < 0    = helper (f2-f1) f1 (n+1)
+
+1.6.6
+seqA :: Integer -> Integer
+seqA 0 = 1
+seqA 1 = 2
+seqA 2 = 3
+seqA n = helper 3 2 1 n
+helper n3 _ _ 2 = n3
+helper n3 n2 n1 n = helper (n3+n2 - 2*n1) n3 n2 (n-1)
+
+1.6.8
+sum'n'count :: Integer -> (Integer, Integer)
+sum'n'count x | x == 0 = (0, 1)
+			  | otherwise = (sum n, toInteger (length n)) 
+  				where n = digs x
+digs :: Integer -> [Integer]
+digs 0 = []
+digs i | i < 0 = digs (-i) 
+	   | otherwise = digs (i `div` 10) ++ [i `mod` 10]	
+
+1.6.9
+integration f a b = let h = (b-a)/1000
+			 in h * ((f a + f b)/2 + helper 0 f a h 1)
+helper s f a h n | n == 1000 = s
+				 | otherwise = helper (s + f (a + n * h)) f a h (n + 1)
+
+2.1.3
+getSecondFrom :: t1 -> t2 -> t3-> t2 
+getSecondFrom x y z = y
+
+2.1.7
+import Data.Function
+
+multSecond = g `on` h
+
+g x y = x * y
+
+h x = snd x
+
+2.1.9
+on3 :: (b -> b -> b -> c) -> (a -> b) -> a -> a -> a -> c
+on3 op f x y z = op (f x) (f y) (f z)
+
+2.2.3
+doItYourself = f . g . h
+
+h = max(42)
+
+g = (^3)
+
+f = (logBase 2)
+
+2.3.7
+class Printable a where
+	toString :: a -> [Char]
+instance Printable Bool where
+	toString True = "true"
+	toString False = "false"
+instance Printable () where
+	toString () = "unit type"
+  
+2.3.9
+instance (Printable a, Printable b) => Printable (a, b) where
+	toString (a, b) = "(" ++ toString a ++ "," ++ toString b ++ ")"
+
+2.4.3
+class KnownToGork a where
+    stomp :: a -> a
+    doesEnrageGork :: a -> Bool
+
+class KnownToMork a where
+    stab :: a -> a
+    doesEnrageMork :: a -> Bool
+
+class (KnownToGork a, KnownToMork a) => KnownToGorkAndMork a where
+    stompOrStab :: a -> a
+    stompOrStab a
+        |doesEnrageGork a && doesEnrageMork a = stomp $ stab a
+        |doesEnrageGork a = stab a
+        |doesEnrageMork a = stomp a
+        |otherwise = a
+
+2.4.5
+data MyIp = MyIp Int
+instance Show MyIp where
+  show (MyIp a) = show a ++ "."
+a = MyIp 127
+b = MyIp 224
+c = MyIp 120
+d = 12
+
+2.4.7
+class (Ord t, Enum t, Bounded t) => SafeEnum t where
+  ssucc :: t -> t
+  ssucc x = if x < maxBound then succ x
+  			else minBound 
+  spred :: t -> t
+  spred x = if x > minBound then pred x
+  			else maxBound
+
+2.4.9
+avg :: Int -> Int -> Int -> Double
+avg x y z = (fromIntegral x + fromIntegral y + fromIntegral z) / 3 
+
+
+
